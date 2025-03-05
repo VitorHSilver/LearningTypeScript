@@ -1,27 +1,35 @@
-var produto = 'Livro';
-var preco = 200;
-var carro = {
-    marca: 'Audi',
-    portas: 5,
+"use strict";
+const frase = 'Front End';
+const preco = 500;
+const condi = true;
+console.log(typeof frase);
+if (typeof frase === 'string') {
+    console.log('Frase é uma string');
+}
+// Union Types
+let total = 500;
+total = 'Quinhentos';
+function isNumber(value) {
+    if (typeof value === 'number') {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+console.log(isNumber('200'));
+const btn = document.querySelector('button');
+btn?.click();
+// exercicio
+const toNumber = (value) => {
+    if (typeof value === 'number') {
+        return value;
+    }
+    else if (typeof value === 'string') {
+        return Number(value);
+    }
+    else {
+        throw 'value deve ser um number | string';
+    }
 };
-var barato = 200 < 400 ? true : 'produto caro';
-function somar(a, b) {
-    return a + b;
-}
-somar(4, 10);
-// somar(4, "4");
-var nintendo = {
-    nome: 'Nintendo',
-    preco: '2000',
-};
-function transformarPreco(produto) {
-    produto.preco = 'R$ ' + produto.preco;
-    return produto;
-}
-var produtoNovo = transformarPreco(nintendo);
-console.log(produtoNovo);
-function normalizarTexto(texto) {
-    return texto.trim().toLowerCase();
-}
-var textor = normalizarTexto('Olá vamos LÁAAAA');
-console.log(textor);
+console.log(toNumber(200));

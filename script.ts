@@ -1,30 +1,39 @@
-let produto = 'Livro';
-let preco = 200;
+const frase: string = 'Front End';
+const preco: number = 500;
+const condi: boolean = true;
 
-const carro = {
-     marca: 'Audi',
-     portas: 5,
-};
-
-const barato = 200 < 400 ? true : 'produto caro';
-
-function somar(a: number, b: number) {
-     return a + b;
+console.log(typeof frase);
+if (typeof frase === 'string') {
+     console.log('Frase é uma string');
 }
 
-somar(4, 10);
-// somar(4, "4");
+// Union Types
 
-const nintendo = {
-     nome: 'Nintendo',
-     preco: '2000',
+let total: string | number = 500;
+total = 'Quinhentos';
+
+function isNumber(value: string | number) {
+     if (typeof value === 'number') {
+          return true;
+     } else {
+          return false;
+     }
+}
+console.log(isNumber('200'));
+
+const btn = document.querySelector('button');
+btn?.click();
+
+// exercicio
+
+const toNumber = (value: number | string) => {
+     if (typeof value === 'number') {
+          return value;
+     } else if (typeof value === 'string') {
+          return Number(value);
+     } else {
+          throw 'value deve ser um number | string';
+     }
 };
 
-function transformarPreco(produto: { nome: string; preco: string }) {
-     produto.preco = 'R$ ' + produto.preco;
-     return produto;
-}
-
-const produtoNovo = transformarPreco(nintendo);
-
-console.log(produtoNovo);
+console.log(toNumber(200));
