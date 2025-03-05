@@ -1,55 +1,120 @@
 # Learning TypeScript
 
-Este projeto é um exemplo básico de como usar TypeScript com diferentes tipos de dados e funções.
+Este projeto é uma introdução ao TypeScript, demonstrando como utilizar interfaces, tipos e funções assíncronas para manipular dados e interagir com APIs.
 
-## Código de Exemplo
+## Estrutura do Projeto
+
+### Interfaces e Tipos
+
+Definimos uma interface `DadosIsObject` para representar objetos com propriedades específicas e um tipo `Categorias` para categorizar itens.
 
 ```typescript
-const frase: string = 'Front End';
-const preco: number = 500;
-const condi: boolean = true;
-
-console.log(typeof frase);
-if (typeof frase === 'string') {
-    console.log('Frase é uma string');
+interface DadosIsObject {
+    nome: string;
+    preco: number;
+    teclado: boolean;
 }
 
-// Union Types
-
-let total: string | number = 500;
-total = 'Quinhentos';
-
-function isNumber(value: string | number) {
-    if (typeof value === 'number') {
-        return true;
-    } else {
-        return false;
-    }
-}
-console.log(isNumber('200'));
-
-const btn = document.querySelector('button');
-btn?.click();
-
-// Exercicio
-
-const toNumber = (value: number | string) => {
-    if (typeof value === 'number') {
-        return value;
-    } else if (typeof value === 'string') {
-        return Number(value);
-    } else {
-        throw 'value deve ser um number | string';
-    }
-};
-
-console.log(toNumber(200));
+type Categorias = 'design' | 'codigo' | 'descod';
 ```
 
-## Descrição
+### Funções
 
-- **Tipos Básicos**: O código define variáveis com tipos básicos como `string`, `number` e `boolean`.
-- **Union Types**: Demonstra o uso de tipos de união (`string | number`).
-- **Funções**: Inclui funções para verificar tipos e converter valores.
-- **Manipulação de DOM**: Seleciona e clica em um botão no DOM.
+#### preencherDados
 
+Esta função recebe um objeto do tipo `DadosIsObject` e insere suas informações no corpo do documento HTML.
+
+```typescript
+function preencherDados(dados: DadosIsObject) {
+    document.body.innerHTML += `
+    <div>
+    <h2>${dados.nome}</h2>
+    <p>R$ ${dados.preco}</p>
+    <p> Inclui teclado: ${dados.teclado ? 'sim' : 'não'} </p>
+    </div>`;
+}
+```
+
+#### pintarCategoria
+
+Esta função recebe uma categoria do tipo `Categorias` e a imprime no console.
+
+```typescript
+function pintarCategoria(categorias: Categorias) {
+    console.log(categorias);
+}
+```
+
+### Exemplo de Uso
+
+Criamos objetos e chamamos as funções para demonstrar seu funcionamento.
+
+```typescript
+const computador: DadosIsObject = {
+    nome: 'Computador',
+    preco: 4000,
+    teclado: true,
+};
+preencherDados(computador);
+
+preencherDados({
+    nome: 'Notebook',
+    preco: 2500,
+    teclado: false,
+});
+
+pintarCategoria('codigo');
+```
+
+### Funções Assíncronas
+
+#### handleFetch
+
+Esta função assíncrona busca dados de uma API e exibe as informações do produto no corpo do documento HTML.
+
+```typescript
+const handleFetch = async () => {
+    const response = await fetch('https://api.origamid.dev/json/notebook.json');
+    const data = await response.json();
+    showProduct(data);
+    console.log(data);
+};
+handleFetch();
+```
+
+#### showProduct
+
+Esta função recebe os dados do produto da API e insere suas informações no corpo do documento HTML.
+
+```typescript
+interface Empresa {
+    nome: string;
+    fundacao: number;
+    pais: string;
+}
+
+interface ProdutoApi {
+    nome: string;
+    preco: number;
+    descricao: string;
+    garantia: string;
+    seguroAcidentes: boolean;
+    empresaFabricante: Empresa;
+    empresaMontadora: Empresa;
+}
+
+const showProduct = (data: ProdutoApi) => {
+    document.body.innerHTML += `<fieldset>
+    <legend>${data.nome}</legend>
+    <sup>R$</sup> <span>${data.preco}</span>
+    <p>${data.descricao}</p>
+    <p>Garantia: ${Number(data.garantia)}</p>
+    <p>Montadora: ${(data.empresaMontadora.nome)}</p>
+    <p>Fabricante: ${(data.empresaFabricante.nome)}</p>
+    </fieldset>`;
+};
+```
+
+## Conclusão
+
+Este projeto demonstra como utilizar TypeScript para definir tipos e interfaces, manipular o DOM e interagir com APIs de forma assíncrona.
